@@ -22,7 +22,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Push helm chart to CodeFresh repo
-        uses: bsord/cf-helm-push@v5
+        uses: bsord/cf-helm-push@v6
         id: push
         with:
           cf-api-key: ${{ secrets.CF_API_KEY }}
