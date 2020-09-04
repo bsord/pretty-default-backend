@@ -22,11 +22,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Push helm chart to CodeFresh repo
-        uses: bsord/cf-helm-push@v11
+        uses: bsord/cf-helm-push@v12
         id: push
-        with:
-          cf-api-key: ${{ secrets.CF_API_KEY }}
-          repository: "cm://h.cfcr.io/fairbanks.io/default"
+        env:
+          SOURCE_DIR: '.'
+          CHART_FOLDER: 'chart'
+          FORCE: 'True'
+          CHARTMUSEUM_ACCESS_TOKEN: ${{ secrets.CF_API_KEY }}
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "Completed at ${{ steps.push.outputs.time }}"
