@@ -22,7 +22,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Push helm chart to CodeFresh repo
-        uses: bsord/cf-helm-push@v14
+        uses: bsord/cf-helm-push@v14.0.1
         id: push
         env:
           SOURCE_DIR: '.'
