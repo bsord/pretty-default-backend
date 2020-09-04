@@ -28,6 +28,7 @@ jobs:
           SOURCE_DIR: '.'
           CHART_FOLDER: 'chart'
           FORCE: 'True'
+          CHARTMUSEUM_URL: 'cm://h.cfcr.io/fairbanks.io/default'
           CHARTMUSEUM_ACCESS_TOKEN: ${{ secrets.CF_API_KEY }}
       # Use the output from the `hello` step
       - name: Get the output time
