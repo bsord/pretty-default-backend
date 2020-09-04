@@ -22,5 +22,5 @@ jobs:
       - name: Push Helm Chart to ChartMuseum
         uses: bsord/cf-helm-push@v14.0.1
         with:
-          api-token: ${{ secrets.CF_API_KEY }}
+          access-token: ${{ secrets.CF_API_KEY }}
           repository-url: 'cm://h.cfcr.io/fairbanks.io/default'
