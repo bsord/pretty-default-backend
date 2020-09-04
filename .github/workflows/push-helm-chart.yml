@@ -1,0 +1,31 @@
+# This is a basic workflow to help you get started with Actions
+
+name: 'Push Helm Chart'
+
+on: 
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags'
+        
+jobs:
+  push-helm-chart:
+    runs-on: ubuntu-latest
+    name: Push helm chart to CodeFresh repo
+    steps:
+      # To use this repository's private action,
+      # you must check out the repository
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Push helm chart to CodeFresh repo
+        uses: bsord/cf-helm-push
+        id: push
+        with:
+          cf-api-key: ${{ secrets.CF_API_KEY }}
+      # Use the output from the `hello` step
+      - name: Get the output time
+        run: echo "Completed at ${{ steps.push.outputs.time }}"
