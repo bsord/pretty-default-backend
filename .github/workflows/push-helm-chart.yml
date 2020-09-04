@@ -17,19 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Push helm chart to CodeFresh repo
     steps:
-      # To use this repository's private action,
-      # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Push helm chart to CodeFresh repo
+      - name: Push Helm Chart to ChartMuseum
         uses: bsord/cf-helm-push@v14.0.1
-        id: push
-        env:
-          SOURCE_DIR: '.'
-          CHART_FOLDER: 'chart'
-          FORCE: 'True'
-          CHARTMUSEUM_URL: 'cm://h.cfcr.io/fairbanks.io/default'
-          CHARTMUSEUM_ACCESS_TOKEN: ${{ secrets.CF_API_KEY }}
-      # Use the output from the `hello` step
-      - name: Get the output time
-        run: echo "Completed at ${{ steps.push.outputs.time }}"
+        with:
+          api-token: ${{ secrets.CF_API_KEY }}
+          repository-url: 'cm://h.cfcr.io/fairbanks.io/default'
