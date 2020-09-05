@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Push Helm Chart to ChartMuseum
+      - name: Push Helm Chart
         uses: bsord/helm-push@v1
         with:
           access-token: ${{ secrets.CF_API_KEY }}
