@@ -5,17 +5,18 @@ name: 'Push Helm Chart'
 on:
   pull_request:
     types: [closed]
+    branches:
+      - master
     
 jobs:
   push-helm-chart:
-    if: github.event.pull_request.merged == 'true'
     runs-on: ubuntu-latest
     name: Push helm chart to CodeFresh repo
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Push Helm Chart to ChartMuseum
-        uses: bsord/cf-helm-push@v14.0.8
+        uses: bsord/cf-helm-push@v1
         with:
           access-token: ${{ secrets.CF_API_KEY }}
           repository-url: 'cm://h.cfcr.io/fairbanks.io/default'
