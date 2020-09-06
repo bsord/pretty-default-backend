@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: 'Push Helm Chart'
+name: 'Build and Publish'
 
 on:
   pull_request:
@@ -11,10 +11,8 @@ on:
 jobs:
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
-  push:
+  build:
     # Ensure test job passes before pushing image.
-    needs: test
-
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
 
@@ -50,6 +48,7 @@ jobs:
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION:
   push-helm-chart:
+    needs: build
     runs-on: ubuntu-latest
     name: Push helm chart to CodeFresh repo
     steps:
