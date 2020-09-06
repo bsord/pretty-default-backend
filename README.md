@@ -5,3 +5,4 @@ A simple good looking yet neutral backend for nginx ingress controller
 :all-the-things:
 Write a how to
 fix workflow so it only triggers on succesful merge
+Update this readme.
