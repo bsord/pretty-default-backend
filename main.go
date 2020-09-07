@@ -123,7 +123,7 @@ func errorHandler(path string) func(http.ResponseWriter, *http.Request) {
 		} else if len(cext) == 0 {
 			log.Printf("couldn't get media type extension. Using %v", ext)
 		} else {
-			ext = cext[0]
+			ext = cext[1]
 		}
 
 		// Set format response header based on request content type
