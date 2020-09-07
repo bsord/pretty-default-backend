@@ -43,7 +43,7 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           env:          
             - name: "BG_COLOR"
-              value: {{ .Values.bgColor }}
+              value: "{{ .Values.bgColor }}"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
