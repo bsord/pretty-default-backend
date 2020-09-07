@@ -23,7 +23,7 @@ import (
 )
 
 const (
-	namespace = "default_http_backend"
+	namespace = "pretty_default_backend"
 	subsystem = "http"
 )
 
