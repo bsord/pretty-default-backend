@@ -7,7 +7,11 @@ replicaCount: 1
 image:
   repository: bsord/pretty-default-backend
   pullPolicy: Always
+
+# Customization
 bgColor: "#334455"
+brandingText: "https://github.com/bsord/pretty-default-backend"
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
