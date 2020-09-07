@@ -6,3 +6,4 @@ A simple good looking yet neutral backend for nginx ingress controller
 Write a how to
 fix workflow so it only triggers on succesful merge
 Update this readme.
+Use seperate writer stream before sending response (prevent broken responses)

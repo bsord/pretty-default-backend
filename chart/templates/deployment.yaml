@@ -44,6 +44,8 @@ spec:
           env:          
             - name: "BG_COLOR"
               value: "{{ .Values.bgColor }}"
+            - name: "BRANDING_TEXT"
+              value: "{{ .Values.brandingText }}"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -56,8 +56,10 @@
 <body>
     <article>
         <h1> </h1>
-        <h1>Oops: 404</h1>
-        <p>The content you're looking for could not be found</p>
+        <h1>Oops: {{.ErrorCode}}</h1>
+        <p>There was a problem with your request</p>
+        <p>Request: <a href="{{.Origin}}">{{.Origin}}</a></p>
+        <span>{{.Branding}}</span>
     </article>
 </body>
 
