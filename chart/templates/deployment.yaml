@@ -33,14 +33,17 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /healthz
               port: 8080
           readinessProbe:
             httpGet:
-              path: /
+              path: /healthz
               port: 8080
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+            env:          
+          - name: "BG_COLOR"
+            value: {{ .Values.bgColor }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -5,9 +5,9 @@
 replicaCount: 1
 
 image:
-  repository: fairbanksio/pretty-default-backend
-  pullPolicy: IfNotPresent
-
+  repository: bsord/pretty-default-backend
+  pullPolicy: Always
+bgColor: "#334455"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

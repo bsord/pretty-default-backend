@@ -18,10 +18,10 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"log"
 	"mime"
 	"net/http"
+	"html/template"
 	"os"
 	"strconv"
 	"strings"
@@ -88,6 +88,11 @@ func main() {
 
 func errorHandler(path string) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+		// Begin Template customization
+		
+
+		// End Template Customization
+
 		start := time.Now()
 		ext := "html"
 
@@ -103,12 +108,14 @@ func errorHandler(path string) func(http.ResponseWriter, *http.Request) {
 			w.Header().Set(RequestId, r.Header.Get(RequestId))
 		}
 
+		// Get request format (html vs json)
 		format := r.Header.Get(FormatHeader)
 		if format == "" {
 			format = "text/html"
 			log.Printf("format not specified. Using %v", format)
 		}
 
+		// Get file extension based on format
 		cext, err := mime.ExtensionsByType(format)
 		if err != nil {
 			log.Printf("unexpected error reading media type extension: %v. Using %v", err, ext)
@@ -116,41 +123,59 @@ func errorHandler(path string) func(http.ResponseWriter, *http.Request) {
 		} else if len(cext) == 0 {
 			log.Printf("couldn't get media type extension. Using %v", ext)
 		} else {
-			ext = cext[0]
+			ext = cext[1]
 		}
+
+		// Set format response header based on request content type
 		w.Header().Set(ContentType, format)
 
+		// Get Error code passed in from ingress
 		errCode := r.Header.Get(CodeHeader)
 		code, err := strconv.Atoi(errCode)
 		if err != nil {
 			code = 404
 			log.Printf("unexpected error reading return code: %v. Using %v", err, code)
 		}
+		// Set error code response header to header passed in from ingress
 		w.WriteHeader(code)
 
+		// prefix the file extension with .go
 		if !strings.HasPrefix(ext, ".") {
 			ext = "." + ext
 		}
-		file := fmt.Sprintf("%v/%v%v", path, code, ext)
-		f, err := os.Open(file)
+
+		// get path for error.gohtml or error.gojson depending on format request header
+		file := fmt.Sprintf("%v/%v%v", path, "error", ext)
+		t, err := template.ParseFiles(file)
 		if err != nil {
-			log.Printf("unexpected error opening file: %v", err)
-			scode := strconv.Itoa(code)
-			file := fmt.Sprintf("%v/%cxx%v", path, scode[0], ext)
-			f, err := os.Open(file)
+			// if there is an error, serve basic http 404 response
+			log.Printf("There was a problem parsing the template file %v", file)
+			log.Fatal(err)
+			http.NotFound(w, r)
+			return
+		}
+		// switch case the error code to determine how to do template replacement
+		switch code {
+		case 404:
+			// define 404 template data
+			data := struct {
+				BGColor string
+			  }{os.Getenv("BG_COLOR")}
+	
+			// serve templated html
+			err = t.Execute(w, data)
 			if err != nil {
-				log.Printf("unexpected error opening file: %v", err)
+				// if error serve basic error response
 				http.NotFound(w, r)
 				return
 			}
-			defer f.Close()
-			log.Printf("serving custom error response for code %v and format %v from file %v", code, format, file)
-			io.Copy(w, f)
+		case 503:
+			http.NotFound(w, r)
+			return
+		default:
+			http.NotFound(w, r)
 			return
 		}
-		defer f.Close()
-		log.Printf("serving custom error response for code %v and format %v from file %v", code, format, file)
-		io.Copy(w, f)
 
 		duration := time.Now().Sub(start).Seconds()
 
