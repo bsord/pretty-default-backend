@@ -1,8 +1,8 @@
 # Pretty default backend
-![GitHub last commit](https://img.shields.io/github/last-commit/bsord/helm-push.svg)
+![GitHub last commit](https://img.shields.io/github/last-commit/bsord/pretty-default-backend.svg)
 ![Build and Publish](https://github.com/bsord/pretty-default-backend/workflows/Build%20and%20Publish/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/bsord/pretty-default-backend)](https://goreportcard.com/report/github.com/bsord/pretty-default-backend)
-![License](https://img.shields.io/github/license/bsord/helm-push.svg?style=flat)
+![License](https://img.shields.io/github/license/bsord/pretty-default-backend.svg?style=flat)
 
 An easily customized pretty default backend replacement for kubernetes nginx ingress controller with a neutral default configuration.
 
