@@ -8,11 +8,13 @@
     <style type="text/css">
         body {
             display: flex;
-            background-color: {{.BGColor}};
+            background: {{.BGColor | safeCSS}};
             text-align: center;
             font-family: 'Helvetica Neue',Arial,Helvetica,sans-serif;
-            color: #333;
+            color: #FFF;
             min-height: 100vh;
+            margin: 0 auto;
+            padding: 20px;
         }
 
         h1 {
@@ -28,10 +30,19 @@
             text-align: center;
             max-width: 650px;
             margin: 0 auto;
-            background-color: #fafafa;
-            border-radius: 5px;
-            padding: 20px;
+            padding: 40px;
+        }
+        .content {
+            flex-direction: column;
+            vertical-align: middle;
+            -ms-flex-item-align: center !important;
+            align-self: center !important;
+            text-align: center;
             margin: 0 auto;
+            border-radius: 5px;
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(25px);
         }
 
         a {
@@ -44,23 +55,73 @@
             color: #333;
             text-decoration: none;
         }
-
+        .jumbo-code {
+            font-size: 144px;
+        }
+        p {
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 18px;
+        }
+        .branding {
+            flex-direction: column;
+            vertical-align: middle;
+            -ms-flex-item-align: center !important;
+            align-self: center !important;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .progress_bar {
+            height: 5px;
+            background: white;
+            width: 0%;
+            -moz-transition: all 10s ease;
+            -moz-transition-delay: 1s;
+            -webkit-transition: all 10s ease;
+            -webkit-transition-delay: 1s;
+            transition: all 10s ease;
+            transition-delay: 1s;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(25px);
+        }
+        .progress-title {
+            font-size: 14px;
+            margin-top: 40px;
+        }
         @media only screen and (max-width : 480px) {
             h1 {
                 font-size: 32px;
             }
         }
+        
+        
     </style>
 </head>
 
 <body>
     <article>
-        <h1> </h1>
-        <h1>Oops: {{.ErrorCode}}</h1>
-        <p>There was a problem with your request</p>
-        <p>Request: <a href="{{.Origin}}">{{.Origin}}</a></p>
-        <span>{{.Branding}}</span>
+        <div class="content">
+            <span class="jumbo-code">{{.ErrorCode}}</span>
+            <h1>PAGE NOT FOUND</h1>
+            <p>Please make sure your location is correct or try again later</p>
+            <div class="progress-title">Redirecting..</div>
+            <div id="progressBar" class="progress_bar"></div>
+        </div>
+        
+        <div class="branding">{{.Branding}}</span>
     </article>
+
+    <script>
+        var progress = document.getElementById("progressBar");
+        setTimeout(
+          function(){
+            progress.style.width = "100%";
+            progress.style.backgroundColor = "white";
+            setTimeout(
+                function(){
+                    window.location.href = "/";
+                },10000);
+          },100);
+      </script>
 </body>
 
 </html> 
