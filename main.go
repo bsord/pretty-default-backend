@@ -91,7 +91,6 @@ func errorHandler(path string) func(http.ResponseWriter, *http.Request) {
 		// End Template Customization
 
 		start := time.Now()
-		ext := "html"
 
 		if os.Getenv("DEBUG") != "" {
 			w.Header().Set(FormatHeader, r.Header.Get(FormatHeader))
