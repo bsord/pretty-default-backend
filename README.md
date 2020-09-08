@@ -4,9 +4,9 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/bsord/pretty-default-backend)](https://goreportcard.com/report/github.com/bsord/pretty-default-backend)
 ![License](https://img.shields.io/github/license/bsord/pretty-default-backend.svg?style=flat)
 
-An easily customized pretty default backend replacement for kubernetes nginx ingress controller with a neutral default configuration.
+An easily customized pretty default backend replacement for Kubernetes Nginx ingress controller with a neutral default configuration.
 
-![Docker+Node](https://raw.githubusercontent.com/bsord/pretty-default-backend/master/pretty-default-backend.png)
+![Kubernetes+Nginx](https://raw.githubusercontent.com/bsord/pretty-default-backend/master/pretty-default-backend.png)
 
 ## Requirements
 * Kubernetes with nginx ingress installed
@@ -23,7 +23,7 @@ helm add repo bsord https://h.cfhr.io/bsord/charts
 ```
 2. Install the helm chart (to same namespace as ingress)
 ```sh
-helm install bsord/pretty-default-backend --set bgColor="#443322" --set brandingText="YourBrandingText" ./chart -n [namespace-of-ingress]
+helm install bsord/pretty-default-backend --set bgColor="#443322" --set brandingText="YourBrandingText" bsord/pretty-default-backend -n [namespace-of-ingress]
 ```
 3. Patch Annotations on existing ingress
 ```sh
@@ -38,9 +38,9 @@ The parameters below can be passed using `--set KEY=VALUE` in the helm install/u
 | ------------- | ------------- | ------------- |
 | `bgColor` | Background color of the page in hex value | #334455 |
 | `brandingText` | Branding text at bottom of error box | BrandingText(2020) |
+
 # Todo:
-:all-the-things:
-Write a how to
-fix workflow so it only triggers on succesful merge
-Update this readme.
-Use seperate writer stream before sending response (prevent broken responses)
+[x] Write a functional ReadMe
+[ } fix workflow so it only triggers on succesful merge
+[ ] Use seperate writer stream before sending response (prevent broken responses)
+[ ] Add support for rich html variable input
