@@ -1,7 +1,7 @@
 # Pretty default backend
 An easily customized pretty default backend replacement for kubernetes nginx ingress controller with a neutral default configuration.
 
-![Docker+Node](https://raw.githubusercontent.com/bsord/pretty-default-backend/master/pretty-default-backend.png)
+![Docker+Node](https://raw.githubusercontent.com/bsord/pretty-default-backend/master/cover.png)
 
 ## Requirements
 * Kubernetes with nginx ingress installed
