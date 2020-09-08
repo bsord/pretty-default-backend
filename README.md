@@ -1,5 +1,6 @@
 # Pretty default backend
 ![Build and Publish](https://github.com/bsord/pretty-default-backend/workflows/Build%20and%20Publish/badge.svg)
+
 An easily customized pretty default backend replacement for kubernetes nginx ingress controller with a neutral default configuration.
 
 ## Requirements
