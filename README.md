@@ -5,6 +5,8 @@
 
 An easily customized pretty default backend replacement for kubernetes nginx ingress controller with a neutral default configuration.
 
+![Docker+Node](https://raw.githubusercontent.com/bsord/pretty-default-backend/master/pretty-default-backend.png)
+
 ## Requirements
 * Kubernetes with nginx ingress installed
 * Helm v3 installed and configured
