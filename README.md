@@ -16,7 +16,7 @@ An easily customized pretty default backend replacement for kubernetes nginx ing
 You can use either installation method below, or both together. However, if custom-http-errors are defined (see configuration) for both the global installation and an ingress specific one, the global backend will be used for any conflicting error code definitions.
 
 ### Installation
-Replace values NAMESPACE_OF_INGRESS, and INGRESS_NAME in the commands below according to your environment
+Replace values [namespace-of-ingress], and [ingress-name] in the commands below according to your environment
 1. Add Helm Repository
 ```sh
 helm add repo bsord https://h.cfhr.io/bsord/charts
