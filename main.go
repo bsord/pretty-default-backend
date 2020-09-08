@@ -24,6 +24,7 @@ import (
 	"os"
 	"strconv"
 	"time"
+	"path"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -57,9 +58,9 @@ const (
 	// RequestId is a unique ID that identifies the request - same as for backend service
 	RequestId = "X-Request-ID"
 
-	// ErrFilesPathVar is the name of the environment variable indicating
+	// ErrFilestemplatePathVar is the name of the environment variable indicating
 	// the location on disk of files served by the handler.
-	ErrFilesPathVar = "ERROR_FILES_PATH"
+	ErrFilestemplatePathVar = "ERROR_FILES_templatePath"
 )
 
 func init() {
@@ -68,12 +69,12 @@ func init() {
 }
 
 func main() {
-	errFilesPath := "/app/www"
-	if os.Getenv(ErrFilesPathVar) != "" {
-		errFilesPath = os.Getenv(ErrFilesPathVar)
+	errFilestemplatePath := "/app/www"
+	if os.Getenv(ErrFilestemplatePathVar) != "" {
+		errFilestemplatePath = os.Getenv(ErrFilestemplatePathVar)
 	}
 
-	http.HandleFunc("/", errorHandler(errFilesPath))
+	http.HandleFunc("/", errorHandler(errFilestemplatePath))
 
 	http.Handle("/metrics", promhttp.Handler())
 
@@ -84,7 +85,7 @@ func main() {
 	http.ListenAndServe(fmt.Sprintf(":8080"), nil)
 }
 
-func errorHandler(path string) func(http.ResponseWriter, *http.Request) {
+func errorHandler(templatePath string) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		start := time.Now()
@@ -137,14 +138,9 @@ func errorHandler(path string) func(http.ResponseWriter, *http.Request) {
 		w.WriteHeader(code)
 
 		// Parse template file based on content type
-		file := fmt.Sprintf("%v/%v%v", path, "error", ext)
-		t, err := template.ParseFiles(file)
-		if err != nil {
-			// if there is an error, serve basic http 404 response
-			log.Printf("There was a problem parsing the template file %v: %v", file, err)
-			http.NotFound(w, r)
-			return
-		}
+		file := fmt.Sprintf("%v/%v%v", templatePath, "error", ext)
+		t := template.Must(template.New(path.Base(file)).Funcs(template.FuncMap{"safeCSS": func(css string) template.CSS { return template.CSS(css) }}).ParseFiles(file))
+		
 
 		// Variable replacement struct
 		data := struct {

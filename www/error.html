@@ -8,7 +8,7 @@
     <style type="text/css">
         body {
             display: flex;
-            background-color: {{.BGColor}};
+            background: {{.BGColor | safeCSS}};
             text-align: center;
             font-family: 'Helvetica Neue',Arial,Helvetica,sans-serif;
             color: #333;
