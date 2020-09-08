@@ -18,9 +18,9 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
-	"html/template"
 	"os"
 	"strconv"
 	"time"
@@ -87,7 +87,6 @@ func main() {
 func errorHandler(path string) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Begin Template customization
-		
 
 		// End Template Customization
 
@@ -108,23 +107,22 @@ func errorHandler(path string) func(http.ResponseWriter, *http.Request) {
 
 		// Get request format (html vs json)
 		format := r.Header.Get(FormatHeader)
-			log.Printf(format)
+		log.Printf(format)
 		if format == "" {
 			format = "text/html"
 			log.Printf("format not specified. Using %v", format)
 		}
 
-
 		switch format {
-			case "text/html; charset=utf-8":
-				ext = ".html"
-			case "text/html":
-				ext = ".html"
-			case "application/json":
-				ext = ".json"
-			default:
-				format = "text/html"
-				ext = ".html"
+		case "text/html; charset=utf-8":
+			ext = ".html"
+		case "text/html":
+			ext = ".html"
+		case "application/json":
+			ext = ".json"
+		default:
+			format = "text/html"
+			ext = ".html"
 		}
 
 		// Set format response header based on request content type
@@ -153,11 +151,11 @@ func errorHandler(path string) func(http.ResponseWriter, *http.Request) {
 
 		// Variable replacement struct
 		data := struct {
-			BGColor string
-			Branding string
+			BGColor   string
+			Branding  string
 			ErrorCode int
-			Origin string
-			}{os.Getenv("BG_COLOR"), os.Getenv("BRANDING_TEXT"), code, r.Header.Get(OriginalURI)}
+			Origin    string
+		}{os.Getenv("BG_COLOR"), os.Getenv("BRANDING_TEXT"), code, r.Header.Get(OriginalURI)}
 
 		// serve templated html
 		err = t.Execute(w, data)
