@@ -86,11 +86,9 @@ func main() {
 
 func errorHandler(path string) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// Begin Template customization
-
-		// End Template Customization
 
 		start := time.Now()
+		var ext string
 
 		if os.Getenv("DEBUG") != "" {
 			w.Header().Set(FormatHeader, r.Header.Get(FormatHeader))
