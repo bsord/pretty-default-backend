@@ -22,9 +22,9 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path"
 	"strconv"
 	"time"
-	"path"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -140,7 +140,6 @@ func errorHandler(templatePath string) func(http.ResponseWriter, *http.Request) 
 		// Parse template file based on content type
 		file := fmt.Sprintf("%v/%v%v", templatePath, "error", ext)
 		t := template.Must(template.New(path.Base(file)).Funcs(template.FuncMap{"safeCSS": func(css string) template.CSS { return template.CSS(css) }}).ParseFiles(file))
-		
 
 		// Variable replacement struct
 		data := struct {
