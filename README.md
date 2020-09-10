@@ -3,17 +3,18 @@
 ![Build and Publish](https://github.com/bsord/pretty-default-backend/workflows/Build%20and%20Publish/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/bsord/pretty-default-backend)](https://goreportcard.com/report/github.com/bsord/pretty-default-backend)
 ![License](https://img.shields.io/github/license/bsord/pretty-default-backend.svg?style=flat)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)
 
 An easily customized pretty default backend replacement for Kubernetes Nginx ingress controller with a neutral default configuration.
 
-![Kubernetes+Nginx](https://raw.githubusercontent.com/bsord/pretty-default-backend/master/cover.png)
-
-## Requirements
-* Kubernetes with nginx ingress installed
-* Helm v3 installed and configured
+![pretty-default-backend](https://raw.githubusercontent.com/bsord/pretty-default-backend/master/cover.png)
 
 ## Getting Started
 A default installation will deploy a single instance of pretty-default-backend to the same namespace of the ingress that will utilize it.
+
+### Requirements
+* [Kubernetes](https://microk8s.io/docs)
+* [Helm v3](https://helm.sh/docs/intro/install/)
 
 ### Installation
 Replace values **[namespace-of-ingress]**, and **[ingress-name]** in the commands below according to your environment
@@ -25,11 +26,17 @@ helm add repo bsord https://h.cfhr.io/bsord/charts
 ```sh
 helm install bsord/pretty-default-backend --set bgColor="#443322" --set brandingText="YourBrandingText" bsord/pretty-default-backend -n [namespace-of-ingress]
 ```
-3. Patch Annotations on existing ingress
-```sh
-kubectl annotate ingress [ingress-name] -n [namespace-of-ingress] nginx.ingress.kubernetes.io/default-backend=pretty-default-backend --overwrite
-kubectl annotate ingress [ingress-name] -n [namespace-of-ingress] nginx.ingress.kubernetes.io/custom-http-errors="404,503" --overwrite
-```
+3. Configure an ingress to use pretty-default-backend with one of the following two options:
+
+ * Patch the Ingress Directly
+    ```sh
+    kubectl annotate ingress [ingress-name] -n [namespace-of-ingress] nginx.ingress.kubernetes.io/default-     backend=pretty-default-backend --overwrite
+    kubectl annotate ingress [ingress-name] -n [namespace-of-ingress] nginx.ingress.kubernetes.io/custom-http-     errors="404,503" --overwrite
+    ```
+  * Pass as parameters to standard templated Helm v3 chart
+  ```sh
+  Helm install [release-name] --set "ingress.annotations.nginx\\.ingress\\.kubernetes\\.io/default-backend=pretty-default-backend" --set "ingress.annotations.nginx\\.ingress\\.kubernetes\\.io/custom-http-errors=404\\,503\\,501" [repo/chart-name]
+  ```
 
 ### Parameters
 The parameters below can be passed using `--set KEY=VALUE` in the helm install/upgrade command above.
