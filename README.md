@@ -19,13 +19,13 @@ A default installation will deploy a single instance of pretty-default-backend t
 ### Installation
 Replace values **[namespace-of-ingress]**, and **[ingress-name]** in the commands below according to your environment
 1. Add Helm Repository
-```sh
-helm add repo bsord https://h.cfhr.io/bsord/charts
-```
+    ```sh
+    helm add repo bsord https://h.cfhr.io/bsord/charts
+    ```
 2. Install the helm chart (to same namespace as ingress)
-```sh
-helm install bsord/pretty-default-backend --set bgColor="#443322" --set brandingText="YourBrandingText" bsord/pretty-default-backend -n [namespace-of-ingress]
-```
+    ```sh
+    helm install bsord/pretty-default-backend --set bgColor="#443322" --set brandingText="YourBrandingText" bsord/pretty-default-backend -n [namespace-of-ingress]
+    ```
 3. Configure an ingress to use pretty-default-backend with one of the following two options:
 
     * Patch the Ingress Directly
