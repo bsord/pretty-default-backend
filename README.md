@@ -43,6 +43,10 @@ Replace values **[namespace-of-ingress]**, and **[ingress-name]** in the command
         --set  "ingress.annotations.nginx\\.ingress\\.kubernetes\\.io/custom-http-errors=404\\,503\\,501" \
         [repo/chart-name]
         ```
+        _Please note you must escape any special characters including commas and periods with a `\` backslash when passing complex strings to `--set`._
+        
+### Verifying
+Browse to a location that does not exist and would trigger a 404 on the ingress you annotated above.
 
 ### Parameters
 The parameters below can be passed using `--set KEY=VALUE` in the helm install/upgrade command above.
