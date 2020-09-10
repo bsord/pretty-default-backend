@@ -29,20 +29,20 @@ helm install bsord/pretty-default-backend --set bgColor="#443322" --set branding
 3. Configure an ingress to use pretty-default-backend with one of the following two options:
 
     * Patch the Ingress Directly
-    ```sh
-    kubectl annotate ingress [ingress-name] -n [namespace-of-ingress] \
-    nginx.ingress.kubernetes.io/default-backend=pretty-default-backend --overwrite
+        ```sh
+        kubectl annotate ingress [ingress-name] -n [namespace-of-ingress] \
+        nginx.ingress.kubernetes.io/default-backend=pretty-default-backend --overwrite
     
-    kubectl annotate ingress [ingress-name] -n [namespace-of-ingress] \
-    nginx.ingress.kubernetes.io/custom-http-errors="404,503" --overwrite
-    ```
+        kubectl annotate ingress [ingress-name] -n [namespace-of-ingress] \
+        nginx.ingress.kubernetes.io/custom-http-errors="404,503" --overwrite
+        ```
     * Pass as parameters to standard templated Helm v3 chart
-    ```sh
-    Helm install [release-name] \
-    --set "ingress.annotations.nginx\\.ingress\\.kubernetes\\.io/default-backend=pretty-default-backend" \
-    --set  "ingress.annotations.nginx\\.ingress\\.kubernetes\\.io/custom-http-errors=404\\,503\\,501" \
-    [repo/chart-name]
-    ```
+        ```sh
+        Helm install [release-name] \
+        --set "ingress.annotations.nginx\\.ingress\\.kubernetes\\.io/default-backend=pretty-default-backend" \
+        --set  "ingress.annotations.nginx\\.ingress\\.kubernetes\\.io/custom-http-errors=404\\,503\\,501" \
+        [repo/chart-name]
+        ```
 
 ### Parameters
 The parameters below can be passed using `--set KEY=VALUE` in the helm install/upgrade command above.
