@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "docker-node-app.fullname" . }}
+  name: {{ include "pretty-default-backend.fullname" . }}
   labels:
-    {{- include "docker-node-app.labels" . | nindent 4 }}
+    {{- include "pretty-default-backend.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "docker-node-app.fullname" . }}
+    name: {{ include "pretty-default-backend.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
