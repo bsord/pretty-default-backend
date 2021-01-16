@@ -1,0 +1,13 @@
+{{- if or (and .Values.autoscaling.enabled (gt (.Values.autoscaling.minReplicas | int) 1)) (gt (.Values.replicaCount | int) 1) -}}
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  labels:
+    {{- include "pretty-default-backend.labels" . | nindent 4 }}
+  name: {{ include "pretty-default-backend.fullname" . }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "pretty-default-backend.selectorLabels" . | nindent 6 }}
+  minAvailable: {{ .Values.minAvailable }}
+{{- end }}
