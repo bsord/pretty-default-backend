@@ -27,7 +27,7 @@ autoscaling:
   minReplicas: 2
   maxReplicas: 10
   targetCPUUtilizationPercentage: 50
-  targetMemoryUtilizationPercentage: 75
+  #targetMemoryUtilizationPercentage: 75
 minAvailable: 1
 
 podSecurityContext: {}
@@ -68,7 +68,7 @@ resources:
   #   memory: 128Mi
   requests:
     cpu: 10m
-    memory: 20Mi
+    #memory: 20Mi
 
 nodeSelector: {}
 
